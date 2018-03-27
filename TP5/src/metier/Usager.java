@@ -1,6 +1,7 @@
 package metier;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,27 +63,30 @@ public class Usager implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (email != null ? email.hashCode() : 0);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.email);
+        hash = 89 * hash + Objects.hashCode(this.password);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usager)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Usager other = (Usager) object;
-        if ((this.email == null && other.email != null) || (this.email != null && !this.email.equals(other.email))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
+        final Usager other = (Usager) obj;
         return true;
     }
 
     @Override
     public String toString() {
-        return "metier.Usager[ email=" + email + " ]";
+        return "Usager{" + "email=" + email + ", password=" + password + '}';
     }
 
 }

@@ -3,6 +3,7 @@ package metier;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -107,27 +108,33 @@ public class Deplacement implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.date);
+        hash = 41 * hash + Objects.hashCode(this.mode);
+        hash = 41 * hash + Objects.hashCode(this.distanceparcourue);
+        hash = 41 * hash + Objects.hashCode(this.jourtravaille);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Deplacement)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Deplacement other = (Deplacement) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
+        final Deplacement other = (Deplacement) obj;
         return true;
     }
 
     @Override
     public String toString() {
-        return "metier.Deplacement[ id=" + id + " ]";
+        return "Deplacement{" + "id=" + id + ", date=" + date + ", mode=" + mode + ", distanceparcourue=" + distanceparcourue + ", jourtravaille=" + jourtravaille + '}';
     }
 
 }
