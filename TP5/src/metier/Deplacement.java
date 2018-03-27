@@ -5,11 +5,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -52,6 +55,11 @@ public class Deplacement implements Serializable {
     @Column(name = "JOURTRAVAILLE")
     private Boolean jourtravaille;
 
+    @JoinColumn(name = "nUsager", referencedColumnName = "id")
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+    // un déplacement ne posséde qu'un usager
+    private Usager nUsager;
+    
     public Deplacement() {
     }
 
@@ -104,6 +112,14 @@ public class Deplacement implements Serializable {
 
     public void setJourtravaille(Boolean jourtravaille) {
         this.jourtravaille = jourtravaille;
+    }
+
+    public Usager getnUsager() {
+        return nUsager;
+    }
+
+    public void setnUsager(Usager nUsager) {
+        this.nUsager = nUsager;
     }
 
     @Override

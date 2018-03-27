@@ -1,14 +1,18 @@
 package metier;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,14 +37,21 @@ public class Usager implements Serializable {
     @Column(name = "PASSWORD")
     private String password;
 
+    // un usager peut avoir plusieurs déplacements
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "nUsager")
+    private Collection<Deplacement> listeDeplacement;
+    
     public Usager() {
+        listeDeplacement = new HashSet<Deplacement>();
     }
 
     public Usager(String email) {
+        this();
         this.email = email;
     }
 
     public Usager(String email, String password) {
+        this();
         this.email = email;
         this.password = password;
     }
@@ -59,6 +70,14 @@ public class Usager implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Collection<Deplacement> getListeDeplacement() {
+        return listeDeplacement;
+    }
+
+    public void setListeDeplacement(Collection<Deplacement> listeDeplacement) {
+        this.listeDeplacement = listeDeplacement;
     }
 
     @Override
