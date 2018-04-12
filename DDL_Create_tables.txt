@@ -1,0 +1,22 @@
+create database deplacements;
+use deplacements;
+
+
+CREATE TABLE USAGER(
+id INTEGER NOT NULL auto_increment,
+email varchar(256) NOT NULL,
+password varchar(256) NOT NULL,
+CONSTRAINT pk_id PRIMARY KEY (id),
+CONSTRAINT unicite_email UNIQUE(email)
+);
+
+CREATE TABLE DEPLACEMENT(
+id INTEGER NOT NULL auto_increment,
+date date NOT NULL,
+mode varchar(3) NOT NULL,
+distanceParcourue DOUBLE,
+jourTravaille boolean DEFAULT false,
+idUsager INTEGER ,
+CONSTRAINT pk_id PRIMARY KEY (id),
+CONSTRAINT fk_usager FOREIGN KEY (idUsager) REFERENCES USAGER(id) ON DELETE SET NULL
+);
