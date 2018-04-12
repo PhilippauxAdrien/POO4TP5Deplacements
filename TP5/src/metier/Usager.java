@@ -8,6 +8,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -24,14 +26,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "USAGER")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usager.findAll", query = "SELECT u FROM Usager u")
+    @NamedQuery(name = "Usager.findAll", query = "SELECT u FROM Usager u"),
+    @NamedQuery(name = "Usager.deleteAll", query = "DELETE FROM Usager")
     , @NamedQuery(name = "Usager.findByEmail", query = "SELECT u FROM Usager u WHERE u.email = :email")})
 public class Usager implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
+     @Id
     @Basic(optional = false)
-    @Column(name = "EMAIL")
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Basic(optional = false)
+    @Column(name = "EMAIL", unique=true)
     private String email;
     @Lob
     @Column(name = "PASSWORD")
@@ -55,7 +63,14 @@ public class Usager implements Serializable {
         this.email = email;
         this.password = password;
     }
-     
+    
+    public boolean addDeplacement(Deplacement d){
+        if(listeDeplacement.add(d)){
+            d.setnUsager(this);
+            return true;
+        }
+        return false;
+    }
     public String getEmail() {
         return email;
     }
@@ -106,6 +121,14 @@ public class Usager implements Serializable {
     @Override
     public String toString() {
         return "Usager{" + "email=" + email + ", password=" + password + '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

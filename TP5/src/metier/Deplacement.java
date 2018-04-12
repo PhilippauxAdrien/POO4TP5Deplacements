@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "DEPLACEMENT")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Deplacement.findAll", query = "SELECT d FROM Deplacement d")
+    @NamedQuery(name = "Deplacement.findAll", query = "SELECT d FROM Deplacement d"),
+    @NamedQuery(name = "Deplacement.deleteAll", query = "DELETE FROM Deplacement")
     , @NamedQuery(name = "Deplacement.findById", query = "SELECT d FROM Deplacement d WHERE d.id = :id")
     , @NamedQuery(name = "Deplacement.findByDate", query = "SELECT d FROM Deplacement d WHERE d.date = :date")
     , @NamedQuery(name = "Deplacement.findByMode", query = "SELECT d FROM Deplacement d WHERE d.mode = :mode")
@@ -51,7 +52,7 @@ public class Deplacement implements Serializable {
     private String mode;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "DISTANCEPARCOURUE",precision=5,scale=2)
-    private BigDecimal distanceparcourue;
+    private Double distanceparcourue;
     @Column(name = "JOURTRAVAILLE")
     private Boolean jourtravaille;
 
@@ -67,7 +68,7 @@ public class Deplacement implements Serializable {
         this.id = id;
     }
 
-    public Deplacement(Date date, String mode, BigDecimal distanceparcourue, Boolean jourtravaille) {
+    public Deplacement(Date date, String mode, Double distanceparcourue, Boolean jourtravaille) {
         this.date = date;
         this.mode = mode;
         this.distanceparcourue = distanceparcourue;
@@ -98,11 +99,11 @@ public class Deplacement implements Serializable {
         this.mode = mode;
     }
 
-    public BigDecimal getDistanceparcourue() {
+    public Double getDistanceparcourue() {
         return distanceparcourue;
     }
 
-    public void setDistanceparcourue(BigDecimal distanceparcourue) {
+    public void setDistanceparcourue(Double distanceparcourue) {
         this.distanceparcourue = distanceparcourue;
     }
 
